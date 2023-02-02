@@ -19,3 +19,4 @@ manager = LoginManager(app)
 toastr = Toastr(app)
 app.config['TOASTR_SHOW_METHOD'] = 'show'
 app.config['TOASTR_TIMEOUT'] = 5000
+
