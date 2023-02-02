@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Контакты</title>
+    <link href="../static/css/contact_page.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Roboto+Slab:wght@300&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Cinzel&family=Roboto+Slab:wght@300&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+<div class="top_bar_black">
+    <div class="logo_container">
+        <img class="logo_image" src="/static/image/hs1.jpg">
+        <div class="nav_block">
+            <div class="nav_button"> <a class="link" href="{{ url_for('home') }}"> Домой </a></div>
+            <div class="nav_button"> <a class="link" href="{{ url_for('about_site') }}"> О сайте </a></div>
+            <div class="nav_button"> <a class="link" href="{{ url_for('decks') }}"> Колоды </a></div>
+            <div class="nav_button"> <a class="link" href="{{ url_for('contact') }}"> Контакты </a></div>
+            {% if current_user.is_authenticated %}
+                <div class="nav_button"><a class="link" href="{{ url_for('account') }}"> {{ current_user.login }} </a></div>
+            {% else %}
+                <div class="nav_button"><a class="link" href="{{ url_for('login') }}"> Войти </a></div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="content_container">
+    <div class="phone">
+        <img class="logo" src="/static/image/phone_50px.png">
+        +7 (925) 333-41-35
+    </div>
+    <div class="email">
+        <img class="logo" src="/static/image/email_50px.png">
+        artemv2001@mail.ru
+    </div>
+    <div class="telegram">
+        <img class="logo" src="/static/image/tg_50px.png">
+        @night_adversary
+    </div>
+</div>
+
+<div class="bottom_bar_black">
+    <div class="main_container">
+        <div class="header_lower">
+            <div class="header_content_lowerline">Источники
+                <div class="header_content_lowerboxcontent">hearthstone.blizzard.com<br/>
+                    www.d0nkey.top<br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

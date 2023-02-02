@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    {{ toastr.include_jquery() }}
+    {{ toastr.include_toastr_css() }}
+    {{ toastr.message() }}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title> Поделиться колодой </title>
+    <link href="../static/css/user_account_page.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Roboto+Slab:wght@300&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Cinzel&family=Roboto+Slab:wght@300&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+<div class="top_bar_black">
+    <div class="logo_container">
+        <img class="logo_image" src="/static/image/hs1.jpg">
+        <div class="nav_block">
+            <div class="nav_button"><a class="link" href="{{ url_for('home') }}"> Домой </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('about_site') }}"> О сайте </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('decks') }}"> Колоды </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('contact') }}"> Контакты </a></div>
+            {% if current_user.is_authenticated %}
+                <div class="nav_button"><a class="link" href="{{ url_for('account') }}"> {{ current_user.login }} </a>
+                </div>
+            {% else %}
+                <div class="nav_button"><a class="link" href="{{ url_for('login') }}"> Войти </a></div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="content_container">
+    <div class="header">
+        Данные пользователя
+    </div>
+    <div class="main_info">
+        <div>Имя: {{ current_user.name }}</div>
+        <div>Логин: {{ current_user.login }}</div>
+        <div>Почта: {{ current_user.email }}</div>
+    </div>
+    <div class="buttons">
+        <div class="update_button">
+            <a class="link" href={{ url_for('update_data') }}>
+                <button class="update">
+                    Изменить данные
+                </button>
+            </a>
+        </div>
+        <div class="logout_button">
+            <a class="button_link" href={{ url_for('logout') }}>
+                <button class="logout">Выйти
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="content_container-2">
+    {% for deck in decks %}
+        <div class="deck">
+            <div class="deck_title">{{ deck.deck_name }}</div>
+            <div class="deck_hero">Герой: {{ deck.deck_hero }}</div>
+            <div class="deck_desc">Описание колоды: {{ deck.deck_description }}</div>
+            <div class="deck_user">Пользователь: {{ deck.deck_user }}</div>
+            <div class="deck_link">Ссылка:<input type="text" value="{{ deck.deck_link }}"></div>
+            <div><img class="scr" src="static/user_image/{{ deck.deck_screenshot }}"></div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="bottom_bar_black">
+    <div class="main_container">
+        <div class="header_lower">
+            <div class="header_content_lowerline">Источники
+                <div class="header_content_lowerboxcontent">hearthstone.blizzard.com<br/>
+                    www.d0nkey.top<br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ toastr.include_toastr_js() }}
+</body>
+</html>

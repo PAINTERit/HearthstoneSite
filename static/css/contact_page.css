@@ -1,0 +1,119 @@
+
+.link {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+.top_bar_black {
+	width:100%;
+	height:90px;
+	background-color:#000000;
+	box-shadow: 0 0 100px black;
+}
+
+.bottom_bar_black {
+	width:100%;
+	height:100px;
+	margin: 230px 0 0 0;
+	background-color:#000000;
+	box-shadow: 0 0 100px black;
+}
+
+.logo_container {
+	height:90px;
+	width:1400px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.header_content_lowerline {
+	font-size:35px;
+	color:#FFFFFF;
+	width:400px;
+	font-family: 'Amatic SC', cursive;
+	margin-top: 5px;
+}
+
+.header_content_lowerboxcontent {
+	font-size:16px;
+	color:#CCCCCC;
+	width:400px;
+}
+
+.main_container {
+	height:90px;
+	width:1000px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.logo_image {
+	max-width:200px;
+	max-height:90px;
+	float:left;
+	margin-left: 210px;
+}
+
+.nav_block {
+	width: 600px;
+	height:90px;
+	float:right;
+}
+
+.nav_button {
+	width: 100px;
+	color:#FFFFFF;
+	font-family: 'Amatic SC', cursive;
+	font-size:30px;
+	margin-left:5px;
+	margin-top:25px;
+	text-align:center;
+	float:left;
+}
+
+.content_container {
+	text-align: center;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 150px;
+	padding-left: 80px;
+	padding-top: 50px;
+	width:400px;
+	height:300px;
+	display: flex;
+	flex-direction: column;
+	background-color: GhostWhite;
+	box-shadow: 0 0 30px 0 black;
+}
+
+.phone {
+	width: 300px;
+	color:#000000;
+	font-family: 'Amatic SC', cursive;
+	font-size:32px;
+	margin: 20px 20px 20px 0;
+	float:left;
+}
+
+.email {
+	width: 300px;
+	color:#000000;
+	font-family: 'Amatic SC', cursive;
+	font-size:32px;
+	margin: 20px 20px 20px 0;
+	float:left;
+}
+
+.telegram {
+	width: 300px;
+	color:#000000;
+	font-family: 'Amatic SC', cursive;
+	font-size:32px;
+	margin: 20px 20px 20px 0;
+	float:left;
+}
+
+.logo {
+	max-height: 30px;
+}
+

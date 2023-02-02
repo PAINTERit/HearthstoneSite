@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Добро пожаловать!</title>
+    <link href="../static/css/home_page.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Roboto+Slab:wght@300&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Cinzel&family=Roboto+Slab:wght@300&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+<div class="top_bar_black">
+    <div class="logo_container">
+        <img class="logo_image" src="/static/image/hs1.jpg">
+        <div class="nav_block">
+            <div class="nav_button"><a class="link" href="{{ url_for('home') }}"> Домой </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('about_site') }}"> О сайте </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('decks') }}"> Колоды </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('contact') }}"> Контакты </a></div>
+            {% if current_user.is_authenticated %}
+                <div class="nav_button"><a class="link" href="{{ url_for('account') }}"> {{ current_user.login }} </a></div>
+            {% else %}
+                <div class="nav_button"><a class="link" href="{{ url_for('login') }}"> Войти </a></div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="content_container">
+    <div class="header">
+        <div class="header_content_mainline">Обманчиво простая и невероятно интересная игра</div>
+        <div class="header_content_tagline">Приветствуем вас в Hearthstone — стратегической карточной игре, простой в
+            освоении и невероятно увлекательной!
+        </div>
+        <div class="main_gif">
+            <img class="gif" src="/static/image/hs.gif">
+        </div>
+    </div>
+
+    <div class="header_lower">
+        <div class="header_content_boxline">Про Hearthstone
+            <div class="header_content_boxcontent">
+                Коллекционная карточная онлайн-игра по мотивам вселенной Warcraft,
+                разработанная компанией Blizzard Entertainment и распространяемая по модели free-to-play.
+            </div>
+            <div class="header_content_boxcontent">
+                Как и в других коллекционных карточных играх,
+                главной целью игрока в Hearthstone является сбор собственной карточной коллекции,
+                которая пополняется путём покупок комплектов карт или получения их в качестве награды.
+                Матчи между игроками сводятся к разыгрыванию карт с задачей первым свести очки здоровья оппонента к
+                нулю.
+                Выпуск новых карт проводится в виде крупных дополнений или загружаемого однопользовательского режима
+                «Приключений».
+                Каждое новое дополнение основывается на части или отдельной локации вселенной Warcraft.
+            </div>
+        </div>
+    </div>
+    <div class="header_lower">
+        <div class="header_content_boxline">Режимы игры</div>
+        <div class="header_content_boxcontent">
+            Рейтинговая игра, или ладдер (англ. ladder — лестница) — это состязание за ранги.
+            Переход с одного ранга на другой происходит при наборе определённого количества «звёзд», дающихся за победу.
+        </div>
+        <div class="header_content_boxcontent">
+            Приключения (Solo Adventures) — однопользовательский режим с игрой против не слишком умного ИИ.
+            В этом режиме нельзя выполнить большинство дейликов, а игры приносят очень мало опыта,
+            зато здесь находится большая часть сюжета игры.
+        </div>
+        <div class="header_content_boxcontent">
+            Арена (The Arena) — целиком платный режим игры.
+            Билет на Арену приобретается за 150 золотых или за реальные деньги.
+            Здесь игроку нужно составить колоду из 30 случайных карт (выбирая каждый раз из трёх вариантов, как при
+            Раскопке) и сразиться ей против других собранных таким же способом колод.
+            Игра одной колодой на Арене длится либо до 12 побед, либо до 3 поражений.
+        </div>
+        <div class="header_content_boxcontent">
+            Потасовка (Tavern Brawl) — игровой режим, введённый в июне 2015-го года. Проходит по особым правилам,
+            которые меняются каждую неделю, иногда повторяясь.
+        </div>
+        <div class="header_content_boxcontent">
+            Поля сражений (Battlegrounds) — режим, введённый в ноябре 2019 и обновляется в среднем дважды в месяц.
+            В этом режиме состязаются 8 человек одновременно, ведя игру на выбывание.
+            Поля сражений выполнены в жанре автобаттлера: колода отсутствует в принципе, управление игрой сводится к
+            вербовке и расстановке существ, а бой они ведут самостоятельно.
+            Что касается карт, здесь играют только существа из специально составленного списка — одни из них
+            коллекционные, другие заимствованы из Приключений, третьи созданы специально для этого режима.
+        </div>
+    </div>
+</div>
+
+
+<div class="bottom_bar_black">
+    <div class="main_container">
+        <div class="header_lower">
+            <div class="header_content_lowerline">Источники
+                <div class="header_content_lowerboxcontent">hearthstone.blizzard.com<br/>
+                    www.d0nkey.top<br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    {{ toastr.include_jquery() }}
+    {{ toastr.include_toastr_css() }}
+    {{ toastr.message() }}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Регистрация</title>
+    <link href="../static/css/update_data_page.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Roboto+Slab:wght@300&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Cinzel&family=Roboto+Slab:wght@300&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+<div class="top_bar_black">
+    <div class="logo_container">
+        <img class="logo_image" src="/static/image/hs1.jpg">
+        <div class="nav_block">
+            <div class="nav_button"><a class="link" href="{{ url_for('home') }}"> Домой </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('about_site') }}"> О сайте </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('about_site') }}"> Колоды </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('contact') }}"> Контакты </a></div>
+            {% if current_user.is_authenticated %}
+                <div class="nav_button"><a class="link" href="{{ url_for('account') }}"> {{ current_user.login }} </a>
+                </div>
+            {% else %}
+                <div class="nav_button"><a class="link" href="{{ url_for('login') }}"> Войти </a></div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="content_container">
+    <div class="form_title"> Смена данных</div>
+    <form class="reg_form" method="post">
+        <div class="form_login"> Логин:</div>
+        <input name="login" type="text" placeholder="Login">
+        <div class="form_password"> Пароль:</div>
+        <input name="password" type="password" placeholder="Password">
+        <div class="form_name"> Имя:</div>
+        <input name="name" type="text" placeholder="Name">
+        <div class="form_email"> Почта:</div>
+        <input name="email" type="text" placeholder="Email">
+        <div><input type="submit" class="sub_button" value="Внести изменения"></div>
+    </form>
+</div>
+
+<div class="bottom_bar_black">
+    <div class="main_container">
+        <div class="header_lower">
+            <div class="header_content_lowerline">Источники
+                <div class="header_content_lowerboxcontent">hearthstone.blizzard.com<br/>
+                    www.d0nkey.top<br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ toastr.include_toastr_js() }}
+</body>
+</html>

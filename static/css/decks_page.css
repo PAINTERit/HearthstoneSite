@@ -1,0 +1,146 @@
+.link {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.top_bar_black {
+    width: 100%;
+    height: 90px;
+    background-color: #000000;
+    box-shadow: 0 0 100px black;
+}
+
+.bottom_bar_black {
+    width: 100%;
+    height: 100px;
+    margin: 130px 0 0 0;
+    background-color: #000000;
+    box-shadow: 0 0 100px black;
+}
+
+.logo_container {
+    height: 90px;
+    width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header_content_lowerline {
+    font-size: 35px;
+    color: #FFFFFF;
+    width: 400px;
+    font-family: 'Amatic SC', cursive;
+    margin-top: 5px;
+}
+
+.header_content_lowerboxcontent {
+    font-size: 16px;
+    color: #CCCCCC;
+    width: 400px;
+}
+
+.main_container {
+    height: 90px;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo_image {
+    max-width: 200px;
+    max-height: 90px;
+    float: left;
+    margin-left: 210px;
+}
+
+.nav_block {
+    width: 600px;
+    height: 90px;
+    float: right;
+}
+
+.nav_button {
+    width: 100px;
+    color: #FFFFFF;
+    font-family: 'Amatic SC', cursive;
+    font-size: 30px;
+    margin-left: 5px;
+    margin-top: 25px;
+    text-align: center;
+    float: left;
+}
+
+.content_container {
+    margin: 50px 0 0 150px;
+    width: 90%;
+    /*height: 90%;*/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.deck {
+    padding: 20px 20px 20px 20px;
+    width: 23%;
+    margin: 20px 53px 20px 53px;
+    background-color: GhostWhite;
+    /*border: solid 5px black;*/
+    box-shadow: 0 0 30px 0 black;
+}
+
+.share_button {
+    width: 250px;
+    height: 40px;
+    border-radius: 15px;
+    border: none;
+    background: cornflowerblue;
+    color: #fff;
+    font-size: 26px;
+    cursor: pointer;
+    font-family: 'Amatic SC', cursive;
+    margin: 30px 0 0 0;
+    box-shadow: 0 0 10px 0 black;
+}
+
+.button {
+    width: 200px;
+    position: relative;
+    left: 43%;
+}
+
+.deck_title {
+    font-family: 'Amatic SC', cursive;
+    font-size: 50px;
+    text-align: center;
+}
+
+.deck_hero, .deck_desc, .deck_link, .deck_user {
+    font-family: 'Amatic SC', cursive;
+    font-size: 30px;
+    margin: 5px;
+}
+
+.d_link {
+    color: black;
+}
+
+.deck_link {
+    position: relative;
+}
+
+.scr {
+    margin-left: 20%;
+    max-width: 250px;
+    max-height: 550px;
+}
+
+input {
+    font-family: 'Amatic SC', cursive;
+    font-size: 30px;
+    width: 70%;
+    padding: 5px;
+    border: 0;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+}
+
+

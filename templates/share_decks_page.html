@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    {{ toastr.include_jquery() }}
+    {{ toastr.include_toastr_css() }}
+    {{ toastr.message() }}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title> Поделиться колодой </title>
+    <link href="../static/css/share_decks_page.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Roboto+Slab:wght@300&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Cinzel&family=Roboto+Slab:wght@300&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+<div class="top_bar_black">
+    <div class="logo_container">
+        <img class="logo_image" src="/static/image/hs1.jpg">
+        <div class="nav_block">
+            <div class="nav_button"><a class="link" href="{{ url_for('home') }}"> Домой </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('about_site') }}"> О сайте </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('decks') }}"> Колоды </a></div>
+            <div class="nav_button"><a class="link" href="{{ url_for('contact') }}"> Контакты </a></div>
+            {% if current_user.is_authenticated %}
+                <div class="nav_button"><a class="link" href="{{ url_for('account') }}"> {{ current_user.login }} </a>
+                </div>
+            {% else %}
+                <div class="nav_button"><a class="link" href="{{ url_for('login') }}"> Войти </a></div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="content_container">
+    <div class="form_title"> Поделиться колодой</div>
+    <form class="share_deck_form" method="post" enctype='multipart/form-data'>
+        <div class="form_deck_name"> Название</div>
+        <input name="deck_name" type="text" placeholder="Название">
+        <div class="form_deck_heroes"> Герой</div>
+        <select name="deck_hero">
+            <option value="Друид">Друид</option>
+            <option value="Воин">Воин</option>
+            <option value="Чернокнижник">Чернокнижник</option>
+            <option value="Маг">Маг</option>
+            <option value="Охотник">Охотник</option>
+            <option value="Паладин">Паладин</option>
+            <option value="Разбойник">Разбойник</option>
+            <option value="Жрец">Жрец</option>
+            <option value="Шаман">Шаман</option>
+            <option value="Рыцарь смерти">Рыцарь смерти</option>
+            <option value="Охотник на демонов">Охотник на демонов</option>
+        </select>
+        <div class="form_deck_link"> Ссылка на колоду</div>
+        <input name="deck_link" type="text" placeholder="Ссылка">
+        <div class="form_deck_description"> Краткое описание колоды</div>
+        <textarea name="deck_description" placeholder="Описание"></textarea>
+        <div class="form_deck_screenshot"> Скриншот колоды</div>
+        <input type="file" name="deck_screenshot" placeholder="Скриншот">
+        <div><input type="submit" class="share_button" value="Поделиться"></div>
+    </form>
+</div>
+
+<div class="bottom_bar_black">
+    <div class="main_container">
+        <div class="header_lower">
+            <div class="header_content_lowerline">Источники
+                <div class="header_content_lowerboxcontent">hearthstone.blizzard.com<br/>
+                    www.d0nkey.top<br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ toastr.include_toastr_js() }}
+</body>
+</html>
