@@ -172,8 +172,22 @@ input {
     width: 23%;
     margin: 20px 53px 20px 53px;
     background-color: GhostWhite;
-    border: solid 5px black;
+    /*border: solid 5px black;*/
     box-shadow: 0 0 30px 0 black;
+}
+
+.del_button {
+    width: 190px;
+    height: 40px;
+    border-radius: 15px;
+    border: none;
+    background: FireBrick;
+    color: #fff;
+    font-size: 25px;
+    cursor: pointer;
+    font-family: 'Amatic SC', cursive;
+    margin: 20px 0 5px 25%;
+    box-shadow: 0 0 10px 0 black;
 }
 
 .content_container-2 {
