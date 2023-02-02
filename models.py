@@ -17,6 +17,12 @@ class BaseModel:
         new_user.save()
         return new_user
 
+    @classmethod
+    def delete(cls, *args, **kwargs):
+        deck = cls.query.filter_by(*args, **kwargs).first()
+        db.session.delete(deck)
+        db.session.commit()
+
 
 class Users(db.Model, BaseModel, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
