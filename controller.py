@@ -54,6 +54,13 @@ def share_decks():
     return render_template('share_decks_page.html')
 
 
+@app.route('/account/delete_deck', methods=['GET', 'POST'])
+@login_required
+def delete_deck():
+    Decks.delete()
+    return redirect(url_for('account'))
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
