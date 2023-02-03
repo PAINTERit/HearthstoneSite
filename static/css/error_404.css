@@ -70,8 +70,12 @@
 	float:left;
 }
 
-.img_404 {
-	width: 500px;
-	height: 500px;
+.error_404 {
+	height: 580px;
 	text-align: center;
+}
+
+.image_404 {
+	height: 500px;
+	width: 500px;
 }
