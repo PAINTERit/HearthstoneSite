@@ -7,7 +7,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 app = Flask(__name__)
 app.debug = True
 
-UPLOAD_FOLDER = 'static/user_image'
+UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg']
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024
