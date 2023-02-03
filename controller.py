@@ -1,8 +1,9 @@
 import os
 from datetime import timedelta
 
-from flask import render_template, request, flash, redirect, url_for, session, send_from_directory
+from flask import request, flash, redirect, url_for, session
 from flask_login import login_required, login_user, logout_user, current_user
+from errors import *
 
 from models import Decks, Users, app
 from file_checker import allowed_file
