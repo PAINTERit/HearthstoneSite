@@ -58,6 +58,7 @@ def share_decks():
 @login_required
 def delete_deck():
     Decks.delete()
+    flash({'title': 'Успех', 'message': 'Колода удалена!'}, 'error')
     return redirect(url_for('account'))
 
 
