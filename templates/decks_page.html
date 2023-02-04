@@ -41,7 +41,7 @@
             <div class="deck_desc">Описание колоды: {{ deck.deck_description }}</div>
             <div class="deck_user">Пользователь: {{ deck.deck_user }}</div>
             <div class="deck_link">Ссылка:<input type="text" value="{{ deck.deck_link }}"></div>
-            <div><img class="scr" src="static/user_image/{{ deck.deck_screenshot }}"></div>
+            <div><p class="text_scr"><img class="scr" src="static/uploads/{{ deck.deck_screenshot }}"></p></div>
         </div>
     {% endfor %}
 </div>
