@@ -129,9 +129,12 @@
 }
 
 .scr {
-    margin-left: 20%;
     max-width: 250px;
     max-height: 550px;
+}
+
+.text_scr {
+    text-align: center;
 }
 
 input {
