@@ -1,30 +1,70 @@
 import re
 
-pattern_login = r"^[a-z0-9]+$"
-pattern_email = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$"
+from flask import flash, redirect, url_for
+
+
+def check_name(name):
+    pattern_name = r"^([А-ЯЁ]{1}[а-яё]{29})|([A-Z]{1}[a-z]{29})$"
+    if re.match(pattern_name, name) is not None:
+        return True
+    return False
 
 
 def check_email(email):
+    pattern_email = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$"
     if re.match(pattern_email, email) is not None:
         return True
-    else:
-        return False
+    return False
 
 
 def check_login(login):
-    if re.match(pattern_login, login) is not None and (len(login) <= 4 or len(login) > 20):
+    pattern_login = r"^[a-z0-9]+$"
+    if re.match(pattern_login, login) is not None:
         return True
-    else:
-        return False
+    return False
 
 
-# def check_length_login(login):
-#     if len(login) <= 4 or len(login) > 20:
-#         return True
-#     return False
+def check_length_login(login):
+    if len(login) <= 4 or len(login) > 20:
+        return True
+    return False
 
 
 def check_length_password(password):
-    if len(password) <= 4 or len(password) > 20:
+    if len(password) <= 6 or len(password) > 33:
         return True
     return False
+
+
+def check_registration(login, password, email, name):
+    if check_login(login):
+        flash({'title': 'Ошибка', 'message': 'Неккоректный логин!'}, 'error')
+        return redirect(url_for('registration'))
+    elif check_length_login(login):
+        flash({'title': 'Ошибка', 'message': 'Неверная длина логина, 5-20 символов!'}, 'error')
+        return redirect(url_for('registration'))
+    elif check_length_password(password):
+        flash({'title': 'Ошибка', 'message': 'Неверная длина пароля, 7-33 символов!'}, 'error')
+        return redirect(url_for('registration'))
+    elif check_email(email):
+        flash({'title': 'Ошибка', 'message': 'Некорректная почта!'}, 'error')
+        return redirect(url_for('registration'))
+    elif check_name(name):
+        flash({'title': 'Ошибка', 'message': 'Некорректное имя!'}, 'error')
+        return redirect(url_for('registration'))
+    else:
+        return True
+
+
+def check_update(password, email, name):
+    if check_length_password(password):
+        flash({'title': 'Ошибка', 'message': 'Неверная длина пароля, 7-33 символов!'}, 'error')
+        return redirect(url_for('update'))
+    elif check_email(email):
+        flash({'title': 'Ошибка', 'message': 'Некорректная почта!'}, 'error')
+        return redirect(url_for('update'))
+    elif check_name(name):
+        flash({'title': 'Ошибка', 'message': 'Некорректное имя!'}, 'error')
+        return redirect(url_for('update'))
+    else:
+        return True
