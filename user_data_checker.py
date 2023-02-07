@@ -1,6 +1,6 @@
 import re
 
-from flask import flash, redirect, url_for
+from flask import flash
 
 
 def check_name(name):
@@ -37,21 +37,21 @@ def check_length_password(password):
 
 
 def check_registration(login, password, email, name):
-    if check_login(login):
+    if not check_login(login):
         flash({'title': 'Ошибка', 'message': 'Неккоректный логин!'}, 'error')
-        return redirect(url_for('registration'))
+        return False
     elif check_length_login(login):
         flash({'title': 'Ошибка', 'message': 'Неверная длина логина, 5-20 символов!'}, 'error')
-        return redirect(url_for('registration'))
+        return False
     elif check_length_password(password):
         flash({'title': 'Ошибка', 'message': 'Неверная длина пароля, 7-33 символов!'}, 'error')
-        return redirect(url_for('registration'))
-    elif check_email(email):
+        return False
+    elif not check_email(email):
         flash({'title': 'Ошибка', 'message': 'Некорректная почта!'}, 'error')
-        return redirect(url_for('registration'))
-    elif check_name(name):
+        return False
+    elif not check_name(name):
         flash({'title': 'Ошибка', 'message': 'Некорректное имя!'}, 'error')
-        return redirect(url_for('registration'))
+        return False
     else:
         return True
 
@@ -59,12 +59,12 @@ def check_registration(login, password, email, name):
 def check_update(password, email, name):
     if check_length_password(password):
         flash({'title': 'Ошибка', 'message': 'Неверная длина пароля, 7-33 символов!'}, 'error')
-        return redirect(url_for('update'))
-    elif check_email(email):
+        return False
+    elif not check_email(email):
         flash({'title': 'Ошибка', 'message': 'Некорректная почта!'}, 'error')
-        return redirect(url_for('update'))
-    elif check_name(name):
+        return False
+    elif not check_name(name):
         flash({'title': 'Ошибка', 'message': 'Некорректное имя!'}, 'error')
-        return redirect(url_for('update'))
+        return False
     else:
         return True
