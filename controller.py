@@ -1,7 +1,7 @@
 import os
 from datetime import timedelta
 
-from flask import request, flash, redirect, url_for, session
+from flask import request, flash, redirect, url_for, session, render_template
 from flask_login import login_required, login_user, logout_user, current_user
 from errors import *
 
@@ -96,29 +96,11 @@ def account():
 def update_data():
     if request.method == 'POST':
         user = Users.query.filter_by(login=current_user.login).first()
-        new_login = request.form.get('login')
-        new_password = request.form.get('password')
-        new_name = request.form.get('name')
-        new_email = request.form.get('email')
-
-        if new_login == current_user.login:
-            if len(new_login) <= 4 or len(new_login) > 20:
-                flash({'title': 'Ошибка', 'message': 'Неверная длина логина, 5-20 символов!'}, 'error')
-                return redirect(url_for('update_data'))
-            if len(new_password) <= 6 or len(new_password) > 33:
-                flash({'title': 'Ошибка', 'message': 'Неверная длина пароля, 7-33 символов!'}, 'error')
-                return redirect(url_for('update_data'))
-            else:
-                user.login = new_login
-                user.password = new_password
-                user.name = new_name
-                user.email = new_email
-                user.save()
-                flash({'title': 'Успех', 'message': 'Данные успешно изменены!'}, 'success')
-                return render_template('user_account_page.html')
-        elif Users.query.filter_by(login=new_login).first():
-            flash({'title': 'Ошибка', 'message': 'Пользователь с таким логином уже зарегистрирован!'}, 'error')
-            return redirect(url_for('update_data'))
+        if check_update(password=request.form.get('password'), email=request.form.get('email'), name=request.form.get('name')):
+            user.update_data()
+            flash({'title': 'Успех', 'message': 'Данные успешно изменены!'}, 'success')
+            return redirect(url_for('account'))
+        return redirect(url_for('update_data'))
     return render_template('update_data_page.html')
 
 
@@ -133,24 +115,15 @@ def logout():
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     if request.method == 'POST':
-        login = request.form.get('login')
-        password = request.form.get('password')
-
         if Users.query.filter_by(login=login).first():
             flash({'title': 'Ошибка', 'message': 'Пользователь с таким логином уже зарегистрирован!'}, 'error')
             return redirect(url_for('registration'))
-        if len(login) <= 4 or len(login) > 20:
-            flash({'title': 'Ошибка', 'message': 'Неверная длина логина, 5-20 символов!'}, 'error')
-            return redirect(url_for('registration'))
-        if len(password) <= 6 or len(password) > 33:
-            flash({'title': 'Ошибка', 'message': 'Неверная длина пароля, 7-33 символов!'}, 'error')
-            return redirect(url_for('registration'))
-        else:
+        elif check_registration(login=request.form.get('login'), password=request.form.get('password'), email=request.form.get('email'), name=request.form.get('name')):
             new_user = Users.create(**dict(request.form))
             login_user(new_user)
             flash({'title': 'Успех', 'message': 'Вы успешно зарегистрированы!'}, 'success')
             return redirect(url_for('account'))
-
+        return redirect(url_for('registration'))
     return render_template('registration_page.html')
 
 
