@@ -9,6 +9,8 @@ from models import Decks, Users, app
 from file_checker import allowed_file
 from werkzeug.utils import secure_filename
 
+from user_data_checker import check_update, check_registration
+
 
 @app.route('/')
 def home():
@@ -115,7 +117,7 @@ def logout():
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     if request.method == 'POST':
-        if Users.query.filter_by(login=login).first():
+        if Users.query.filter_by(login=request.form.get('login')).first():
             flash({'title': 'Ошибка', 'message': 'Пользователь с таким логином уже зарегистрирован!'}, 'error')
             return redirect(url_for('registration'))
         elif check_registration(login=request.form.get('login'), password=request.form.get('password'), email=request.form.get('email'), name=request.form.get('name')):
