@@ -1,5 +1,6 @@
 import datetime
 
+from flask import request
 from flask_login import UserMixin, current_user
 
 from app import db, app, manager
@@ -18,11 +19,11 @@ class BaseModel:
         return new_user
 
     @classmethod
-    def update_data(cls, password, name, email):
+    def update_data(cls):
         new_user = cls.query.filter_by(login=current_user.login).first()
-        new_user.password = password
-        new_user.name = name
-        new_user.email = email
+        new_user.password = request.form.get('password')
+        new_user.name = request.form.get('name')
+        new_user.email = request.form.get('email')
         new_user.save()
 
     @classmethod
