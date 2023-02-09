@@ -70,13 +70,13 @@
 	float:left;
 }
 
-.error_404 {
+.error_500 {
 	height: 580px;
 	text-align: center;
 }
 
-.image_404 {
+.image_500 {
 	margin-top: 50px;
-	height: 500px;
-	width: 500px;
+	height: 600px;
+	width: 600px;
 }
