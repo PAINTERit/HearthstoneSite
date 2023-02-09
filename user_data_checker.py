@@ -4,7 +4,7 @@ from flask import flash
 
 
 def check_name(name):
-    pattern_name = r"^([А-ЯЁ]{1}[а-яё]{29})|([A-Z]{1}[a-z]{29})$"
+    pattern_name = r"^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$"
     if re.match(pattern_name, name) is not None:
         return True
     return False
