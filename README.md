@@ -17,7 +17,7 @@
 
 ```
 git clone https://github.com/PAINTERit/HearthstoneSiteFlask.git
-cd GenPC_Flask
+cd HearthstoneSiteFlask
 ```
 
 <br/>
