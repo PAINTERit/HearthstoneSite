@@ -191,7 +191,7 @@ def registration() -> Response | str:
 
 
 @app.after_request
-def redirect_to_login(response) -> Response | int:
+def redirect_to_login(response: int) -> Response | int:
     """
     Функция для перекидывания на страницу авторизации.
     :param response: int (статус-код ошибки 401)
