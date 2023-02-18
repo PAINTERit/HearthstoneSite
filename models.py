@@ -85,7 +85,7 @@ class Decks(db.Model, BaseModel):
 
 
 @manager.user_loader
-def load_user(user_id) -> Users:
+def load_user(user_id: int) -> Users:
     """
     Вспомогательная функция для flask login.
     :param user_id: int (id пользователя)
