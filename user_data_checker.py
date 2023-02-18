@@ -3,7 +3,7 @@ import re
 from flask import flash
 
 
-def check_name(name) -> bool:
+def check_name(name: str) -> bool:
     """
     Функция для проверки имени по регулярному выражению.
     :param name: str (имя пользователя)
@@ -15,7 +15,7 @@ def check_name(name) -> bool:
     return False
 
 
-def check_email(email) -> bool:
+def check_email(email: str) -> bool:
     """
     Функция для проверки почты пользователя по регулярному выражению.
     :param email: str (почта пользователя)
@@ -27,7 +27,7 @@ def check_email(email) -> bool:
     return False
 
 
-def check_login(login) -> bool:
+def check_login(login: str) -> bool:
     """
     Функция для проверки логина пользователя по регулярному выражению.
     :param login: str (логин пользователя)
@@ -39,7 +39,7 @@ def check_login(login) -> bool:
     return False
 
 
-def check_length_login(login) -> bool:
+def check_length_login(login: str) -> bool:
     """
     Функция для проверки длины логина пользователя.
     :param login: str (логин пользователя)
@@ -50,7 +50,7 @@ def check_length_login(login) -> bool:
     return False
 
 
-def check_length_password(password) -> bool:
+def check_length_password(password: str) -> bool:
     """
     Функция для проверки длины пароля пользователя.
     :param password: str (пароль пользователя)
@@ -61,13 +61,13 @@ def check_length_password(password) -> bool:
     return False
 
 
-def check_registration(login, password, email, name) -> bool:
+def check_registration(login: str, password: str, email: str, name: str) -> bool:
     """
     Функция для полной проверки при регистрации. Всплывает сообщение о соответствующей ошибке.
     :param login: str (логин пользователя)
     :param password: str (пароль пользователя)
     :param email: str (почта пользователя)
-    :param name: str (имя пользователя)
+    :param name: str (имя пользователя): str
     :return: bool
     """
     if not check_login(login):
@@ -95,7 +95,7 @@ def check_registration(login, password, email, name) -> bool:
         return True
 
 
-def check_update(password, email, name) -> bool:
+def check_update(password: str, email: str, name: str) -> bool:
     """
     Функция для полной проверки при обновлении данных. Всплывает сообщение о соответствующей ошибке.
     :param password: str (пароль пользователя)
