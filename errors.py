@@ -4,7 +4,7 @@ from app import app
 
 
 @app.errorhandler(404)
-def error404(status) -> str:
+def error404(status: int) -> str:
     """
     Функция обрабатывает ошибку HTTP 404.
     :param status: int(Код ошибки)
@@ -14,7 +14,7 @@ def error404(status) -> str:
 
 
 @app.errorhandler(403)
-def error403(status) -> str:
+def error403(status: int) -> str:
     """
     Функция обрабатывает ошибку HTTP 403.
     :param status: int(Код ошибки)
@@ -24,7 +24,7 @@ def error403(status) -> str:
 
 
 @app.errorhandler(500)
-def error500(status) -> str:
+def error500(status: int) -> str:
     """
     Функция обрабатывает ошибку HTTP 500.
     :param status: int(Код ошибки)
