@@ -1,8 +1,9 @@
 import os
 from datetime import timedelta
 
-from errors import *
-from flask import Response, flash, redirect, request, session, url_for
+from errors import error403, error404, error500
+from flask import (Response, flash, redirect, render_template, request,
+                   session, url_for)
 from flask_login import current_user, login_required, login_user, logout_user
 from user_data_checker import check_registration, check_update
 from werkzeug.utils import secure_filename
@@ -14,7 +15,7 @@ from models import Decks, Users, app
 @app.route("/")
 def home() -> str:
     """
-    Views главной страницы.
+    Главная страница сайта.
     :return: str (главная страница сайта)
     """
     return render_template("home_page.html")
@@ -23,7 +24,7 @@ def home() -> str:
 @app.route("/about")
 def about_site() -> str:
     """
-    Views страницы с информацией о сайте.
+    Страница с информацией о сайте.
     :return: str (страница с информацией о сайте)
     """
     return render_template("about_site_page.html")
@@ -32,7 +33,7 @@ def about_site() -> str:
 @app.route("/contacts")
 def contact() -> str:
     """
-    Views страницы с контактами.
+    Страница с контактами.
     :return: str (страница с контактами)
     """
     return render_template("contact_page.html")
@@ -41,7 +42,7 @@ def contact() -> str:
 @app.route("/decks")
 def decks() -> str:
     """
-    Views страницы с колодами пользователей.
+    Страница с колодами пользователей.
     :return: str (страница с колодами)
     """
     decks = Decks.query.all()
@@ -52,29 +53,34 @@ def decks() -> str:
 @login_required
 def share_decks() -> Response | str:
     """
-    Функция, проверяющая приложенный файл к колоде, если файл корректный, то он добавляется в БД вместе с колодой,
+    Функция, проверяющая приложенный файл к колоде, если файл корректный,
+    то он добавляется в БД вместе с колодой,
     иначе всплывает сообщение о некорректности файла и операция начинается заново.
-    :return: Response | str (в случае успеха перекидывает на функцию decks, а в случае неудачи операция повторяется)
+    :return: Response | str (в случае успеха перекидывает на функцию decks,
+    а в случае неудачи операция повторяется)
     """
-    if request.method == "POST":
-        file = request.files["deck_screenshot"]
-        if allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-            Decks.create(
-                deck_screenshot=filename,
-                deck_user=current_user.login,
-                **dict(request.form)
-            )
-            flash({"title": "Успех", "message": "Колода успешно добавлена!"}, "success")
-            return redirect(url_for("decks"))
-        if not allowed_file(file.filename):
-            flash({"title": "Неудача", "message": "Неправильное расширение!"}, "error")
-            return redirect(url_for("share_decks"))
-        if file.filename == "":
-            flash({"title": "Неудача", "message": "Файл не выбран!"}, "error")
-            return redirect(url_for("share_decks"))
-    return render_template("share_decks_page.html")
+    if request.method == "GET":
+        return render_template("share_decks_page.html")
+    file = request.files["deck_screenshot"]
+    if allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        Decks.create(
+            deck_screenshot=filename,
+            deck_user=current_user.login,
+            **dict(request.form)
+        )
+        flash({"title": "Успех",
+               "message": "Колода успешно добавлена!"}, "success")
+        return redirect(url_for("decks"))
+    if not allowed_file(file.filename):
+        flash({"title": "Неудача",
+               "message": "Неправильное расширение!"}, "error")
+        return redirect(url_for("share_decks"))
+    if file.filename == "":
+        flash({"title": "Неудача",
+               "message": "Файл не выбран!"}, "error")
+        return redirect(url_for("share_decks"))
 
 
 @app.route("/account/delete_deck", methods=["GET", "POST"])
@@ -82,7 +88,8 @@ def share_decks() -> Response | str:
 def delete_deck() -> Response:
     """
     Функция для удаления колоды из БД.
-    :return: Response (перекидывает на функцию account, отображающая данные пользователя)
+    :return: Response (перекидывает на функцию account,
+    отображающая данные пользователя)
     """
     Decks.delete()
     flash({"title": "Успех", "message": "Колода удалена!"}, "success")
@@ -92,29 +99,30 @@ def delete_deck() -> Response:
 @app.route("/login", methods=["GET", "POST"])
 def login() -> Response | str:
     """
-    Функция авторизации пользователя. В случае успеха пользователь попадает на страницу со своими данными,
+    Функция авторизации пользователя.
+    В случае успеха пользователь попадает на страницу со своими данными,
     иначе всплывает сообщение об ошибке авторизации.
-    :return: Response | str (перекидывает на профиль пользователя, иначе повторная авторизация)
+    :return: Response | str (перекидывает на профиль пользователя,
+    иначе повторная авторизация)
     """
-    if request.method == "POST":
-        user = Users.query.filter_by(
-            login=request.form.get("login"), password=request.form.get("password")
-        ).first()
-        if user:
-            login_user(user)
-            flash({"title": "Успех", "message": "Вы успешно вошли!"}, "success")
-            return redirect(url_for("account"))
-        else:
-            flash({"title": "Ошибка", "message": "Пользователь не найден!"}, "error")
-            return redirect(url_for("login"))
-    return render_template("login_page.html")
+    if request.method == "GET":
+        return render_template("login_page.html")
+    user = Users.query.filter_by(
+        login=request.form.get("login"), password=request.form.get("password")
+    ).first()
+    if user:
+        login_user(user)
+        flash({"title": "Успех", "message": "Вы успешно вошли!"}, "success")
+        return redirect(url_for("account"))
+    flash({"title": "Ошибка", "message": "Пользователь не найден!"}, "error")
+    return redirect(url_for("login"))
 
 
 @app.route("/account")
 @login_required
 def account() -> str:
     """
-    Views страницы с профиля пользователя.
+    Страница с профилем пользователя.
     :return: str (возвращает профиль пользователя)
     """
     session.permanent = True
@@ -128,21 +136,19 @@ def account() -> str:
 def update_data() -> Response | str:
     """
     Функция для смены данных в БД.
-    :return: Response | str (в случае успеха всплывает сообщение об успехе и перекидывает в профиль пользователя,
+    :return: Response | str (в случае успеха всплывает сообщение
+    об успехе и перекидывает в профиль пользователя,
     иначе повторная смена данных)
     """
-    if request.method == "POST":
-        user = Users.query.filter_by(login=current_user.login).first()
-        if check_update(
-            password=request.form.get("password"),
-            email=request.form.get("email"),
-            name=request.form.get("name"),
-        ):
-            user.update_data()
-            flash({"title": "Успех", "message": "Данные успешно изменены!"}, "success")
-            return redirect(url_for("account"))
-        return redirect(url_for("update_data"))
-    return render_template("update_data_page.html")
+    if request.method == "GET":
+        return render_template("update_data_page.html")
+    user = Users.query.filter_by(login=current_user.login).first()
+    if check_update(**request.form):
+        user.update_data()
+        flash({"title": "Успех",
+               "message": "Данные успешно изменены!"}, "success")
+        return redirect(url_for("account"))
+    return redirect(url_for("update_data"))
 
 
 @app.route("/account/logout")
@@ -150,9 +156,11 @@ def update_data() -> Response | str:
 def logout() -> Response:
     """
     Функция для выхода из профиля пользователя.
-    :return: Response (всплывает сообщение о выходе и перекидывает на страницу авторизации)
+    :return: Response (всплывает сообщение о выходе
+    и перекидывает на страницу авторизации)
     """
-    flash({"title": "Успех", "message": "Вы вышли из аккаунта!"}, "success")
+    flash({"title": "Успех",
+           "message": "Вы вышли из аккаунта!"}, "success")
     logout_user()
     return redirect(url_for("login"))
 
@@ -160,40 +168,37 @@ def logout() -> Response:
 @app.route("/registration", methods=["GET", "POST"])
 def registration() -> Response | str:
     """
-    Функция для регистрации нового пользователя. Производится проверка по всем параметрам.
-    :return: Response | str (в случае успеха всплывает сообщение и перекидывает в профиль пользователя,
+    Функция для регистрации нового пользователя.
+    Производится проверка по всем параметрам.
+    :return: Response | str (в случае успеха всплывает сообщение
+    и перекидывает в профиль пользователя,
     в случае повторного логина всплывает сообщение об этом и повторная регистрация)
     """
-    if request.method == "POST":
-        if Users.query.filter_by(login=request.form.get("login")).first():
-            flash(
-                {
-                    "title": "Ошибка",
-                    "message": "Пользователь с таким логином уже зарегистрирован!",
-                },
-                "error",
-            )
-            return redirect(url_for("registration"))
-        elif check_registration(
-            login=request.form.get("login"),
-            password=request.form.get("password"),
-            email=request.form.get("email"),
-            name=request.form.get("name"),
-        ):
-            new_user = Users.create(**dict(request.form))
-            login_user(new_user)
-            flash(
-                {"title": "Успех", "message": "Вы успешно зарегистрированы!"}, "success"
-            )
-            return redirect(url_for("account"))
+    if request.method == "GET":
+        return render_template("registration_page.html")
+    if Users.query.filter_by(login=request.form.get("login")).first():
+        flash(
+            {
+                "title": "Ошибка",
+                "message": "Пользователь с таким логином уже зарегистрирован!",
+            },
+            "error",
+        )
         return redirect(url_for("registration"))
-    return render_template("registration_page.html")
+    elif check_registration(**request.form):
+        new_user = Users.create(**dict(request.form))
+        login_user(new_user)
+        flash({"title": "Успех",
+               "message": "Вы успешно зарегистрированы!"}, "success")
+        return redirect(url_for("account"))
+    return redirect(url_for("registration"))
 
 
 @app.after_request
 def redirect_to_login(response: int) -> Response | int:
     """
-    Функция для перекидывания на страницу авторизации.
+    Функция перенаправления на страницу авторизации,
+    если пользователь переходит на страницу, требующую авторизацию.
     :param response: int (статус-код ошибки 401)
     :return: Response | int (перекидывает на страницу авторизации)
     """
