@@ -1,3 +1,7 @@
+"""
+Модуль с основной логикой проекта, содержащий обработку данных из БД.
+"""
+
 import os
 from datetime import timedelta
 
@@ -9,7 +13,7 @@ from user_data_checker import check_registration, check_update
 from werkzeug.utils import secure_filename
 
 from file_checker import allowed_file
-from models import Decks, Users, app
+from models import Deck, User, app
 
 
 @app.route("/")
@@ -45,7 +49,7 @@ def decks() -> str:
     Страница с колодами пользователей.
     :return: str (страница с колодами)
     """
-    decks = Decks.query.all()
+    decks = Deck.query.all()
     return render_template("decks_page.html", decks=decks)
 
 
@@ -65,7 +69,7 @@ def share_decks() -> Response | str:
     if allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-        Decks.create(
+        Deck.create(
             deck_screenshot=filename,
             deck_user=current_user.login,
             **dict(request.form)
@@ -91,7 +95,7 @@ def delete_deck() -> Response:
     :return: Response (перекидывает на функцию account,
     отображающая данные пользователя)
     """
-    Decks.delete()
+    Deck.delete()
     flash({"title": "Успех", "message": "Колода удалена!"}, "success")
     return redirect(url_for("account"))
 
@@ -107,7 +111,7 @@ def login() -> Response | str:
     """
     if request.method == "GET":
         return render_template("login_page.html")
-    user = Users.query.filter_by(
+    user = User.query.filter_by(
         login=request.form.get("login"), password=request.form.get("password")
     ).first()
     if user:
@@ -127,7 +131,7 @@ def account() -> str:
     """
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=30)
-    decks = Decks.query.filter_by(deck_user=current_user.login)
+    decks = Deck.query.filter_by(deck_user=current_user.login)
     return render_template("user_account_page.html", decks=decks)
 
 
@@ -142,7 +146,7 @@ def update_data() -> Response | str:
     """
     if request.method == "GET":
         return render_template("update_data_page.html")
-    user = Users.query.filter_by(login=current_user.login).first()
+    user = User.query.filter_by(login=current_user.login).first()
     if check_update(**request.form):
         user.update_data()
         flash({"title": "Успех",
@@ -176,7 +180,7 @@ def registration() -> Response | str:
     """
     if request.method == "GET":
         return render_template("registration_page.html")
-    if Users.query.filter_by(login=request.form.get("login")).first():
+    if User.query.filter_by(login=request.form.get("login")).first():
         flash(
             {
                 "title": "Ошибка",
@@ -186,7 +190,7 @@ def registration() -> Response | str:
         )
         return redirect(url_for("registration"))
     elif check_registration(**request.form):
-        new_user = Users.create(**dict(request.form))
+        new_user = User.create(**dict(request.form))
         login_user(new_user)
         flash({"title": "Успех",
                "message": "Вы успешно зарегистрированы!"}, "success")
