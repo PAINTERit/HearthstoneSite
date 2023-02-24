@@ -1,3 +1,7 @@
+"""
+Модуль для работы с БД и использования данных из БД.
+"""
+
 import datetime
 
 from flask import request
@@ -10,6 +14,9 @@ class BaseModel:
     """
     Класс, представляющий основные методы для работы с БД.
     """
+
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     def save(self) -> None:
         """
@@ -32,7 +39,7 @@ class BaseModel:
         return new_user
 
     @classmethod
-    def update_data(cls) -> None:
+    def update(cls) -> None:
         """
         Метод для обновления данных пользователя в БД.
         :return: None
@@ -56,42 +63,38 @@ class BaseModel:
         db.session.commit()
 
 
-class Users(db.Model, BaseModel, UserMixin):
+class User(db.Model, BaseModel, UserMixin):
     """
     Класс, предоставляющий модель для хранения данных пользователя.
     """
 
-    id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String(64))
     password = db.Column(db.String(64))
     name = db.Column(db.String(64))
     email = db.Column(db.String(64))
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
 
-class Decks(db.Model, BaseModel):
+class Deck(db.Model, BaseModel):
     """
     Класс, предоставляющий модель для хранения данных о колодах пользователя.
     """
 
-    id = db.Column(db.Integer, primary_key=True)
     deck_name = db.Column(db.String(64))
     deck_hero = db.Column(db.String(64))
     deck_link = db.Column(db.String(200))
     deck_description = db.Column(db.Text)
     deck_screenshot = db.Column(db.String(200))
     deck_user = db.Column(db.String(64))
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
 
 @manager.user_loader
-def load_user(user_id: int) -> Users:
+def load_user(user_id: int) -> User:
     """
     Вспомогательная функция для flask login.
     :param user_id: int (id пользователя)
     :return: Users (класс пользователя)
     """
-    return Users.query.get(user_id)
+    return User.query.get(user_id)
 
 
 with app.app_context():
