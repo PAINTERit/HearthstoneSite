@@ -1,3 +1,6 @@
+"""
+Модуль для проверки данных пользователя.
+"""
 import re
 
 from flask import flash
@@ -6,6 +9,7 @@ from flask import flash
 def check_name(name: str) -> bool:
     """
     Функция для проверки имени по регулярному выражению.
+    Регулярное выражение требует заглавную первую букву и 1-23 остальных символа.
     :param name: str (имя пользователя)
     :return: bool
     """
@@ -18,6 +22,8 @@ def check_name(name: str) -> bool:
 def check_email(email: str) -> bool:
     """
     Функция для проверки почты пользователя по регулярному выражению.
+    Регулярное выражение требует ввести правильный вид электронной почты:
+    символы-собачка-символы-точка-символы (upd@gmail.com)
     :param email: str (почта пользователя)
     :return: bool
     """
@@ -30,6 +36,7 @@ def check_email(email: str) -> bool:
 def check_login(login: str) -> bool:
     """
     Функция для проверки логина пользователя по регулярному выражению.
+    Регулярное выражение требует ввести логин без специальных символов.
     :param login: str (логин пользователя)
     :return: bool
     """
@@ -91,8 +98,7 @@ def check_registration(login: str, password: str, email: str, name: str) -> bool
     elif not check_name(name):
         flash({"title": "Ошибка", "message": "Некорректное имя!"}, "error")
         return False
-    else:
-        return True
+    return True
 
 
 def check_update(password: str, email: str, name: str) -> bool:
@@ -115,5 +121,4 @@ def check_update(password: str, email: str, name: str) -> bool:
     elif not check_name(name):
         flash({"title": "Ошибка", "message": "Некорректное имя!"}, "error")
         return False
-    else:
-        return True
+    return True
