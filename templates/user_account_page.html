@@ -62,6 +62,7 @@
 <div class="content_container-2">
     {% for deck in decks %}
         <div class="deck">
+            <div><input type="hidden" name="deck_id" value={{ deck.id }}></div>
             <div class="deck_title">{{ deck.deck_name }}</div>
             <div class="deck_hero">Герой: {{ deck.deck_hero }}</div>
             <div class="deck_desc">Описание колоды: {{ deck.deck_description }}</div>
