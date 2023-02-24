@@ -51,14 +51,12 @@ class BaseModel:
         new_user.save()
 
     @classmethod
-    def delete(cls, *args, **kwargs) -> None:
+    def delete(cls) -> None:
         """
         Метод для удаления колоды из БД.
-        :param args: tuple (данные колоды)
-        :param kwargs: dict (данные колоды)
         :return: None
         """
-        deck = cls.query.filter_by(*args, **kwargs).first()
+        deck = cls.query.filter_by(id=Deck.id).first()
         db.session.delete(deck)
         db.session.commit()
 
