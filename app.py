@@ -1,3 +1,7 @@
+"""
+Модуль, хранящий константы и настройки модулей для проекта.
+"""
+
 import uuid
 
 from flask import Flask
@@ -13,7 +17,7 @@ UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg']
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024
-app.config['SECRET_KEY'] = uuid.uuid4()
+app.config['SECRET_KEY'] = str(uuid.uuid4())
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['TOASTR_SHOW_METHOD'] = 'show'
 app.config['TOASTR_TIMEOUT'] = 5000
