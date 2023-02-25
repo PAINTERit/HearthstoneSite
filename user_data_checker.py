@@ -13,7 +13,7 @@ def check_name(name: str) -> bool:
     :param name: str (имя пользователя)
     :return: bool
     """
-    pattern_name = r"^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$"
+    pattern_name = r'^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$'
     if re.match(pattern_name, name) is not None:
         return True
     return False
@@ -27,7 +27,7 @@ def check_email(email: str) -> bool:
     :param email: str (почта пользователя)
     :return: bool
     """
-    pattern_email = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$"
+    pattern_email = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$'
     if re.match(pattern_email, email) is not None:
         return True
     return False
@@ -40,7 +40,7 @@ def check_login(login: str) -> bool:
     :param login: str (логин пользователя)
     :return: bool
     """
-    pattern_login = r"^[a-z0-9]+$"
+    pattern_login = r'^[a-z0-9]+$'
     if re.match(pattern_login, login) is not None:
         return True
     return False
@@ -70,7 +70,8 @@ def check_length_password(password: str) -> bool:
 
 def check_registration(login: str, password: str, email: str, name: str) -> bool:
     """
-    Функция для полной проверки при регистрации. Всплывает сообщение о соответствующей ошибке.
+    Функция для полной проверки при регистрации.
+    Всплывает сообщение о соответствующей ошибке.
     :param login: str (логин пользователя)
     :param password: str (пароль пользователя)
     :param email: str (почта пользователя)
@@ -78,32 +79,36 @@ def check_registration(login: str, password: str, email: str, name: str) -> bool
     :return: bool
     """
     if not check_login(login):
-        flash({"title": "Ошибка", "message": "Неккоректный логин!"}, "error")
+        flash({'title': 'Ошибка',
+               'message': 'Неккоректный логин!'}, 'error')
         return False
     elif check_length_login(login):
         flash(
-            {"title": "Ошибка", "message": "Неверная длина логина, 5-20 символов!"},
-            "error",
+            {'title': 'Ошибка',
+             'message': 'Неверная длина логина, 5-20 символов!'},
+            'error',
         )
         return False
     elif check_length_password(password):
         flash(
-            {"title": "Ошибка", "message": "Неверная длина пароля, 7-33 символов!"},
-            "error",
+            {'title': 'Ошибка',
+             'message': 'Неверная длина пароля, 7-33 символов!'},
+            'error',
         )
         return False
     elif not check_email(email):
-        flash({"title": "Ошибка", "message": "Некорректная почта!"}, "error")
+        flash({'title': 'Ошибка', 'message': 'Некорректная почта!'}, 'error')
         return False
     elif not check_name(name):
-        flash({"title": "Ошибка", "message": "Некорректное имя!"}, "error")
+        flash({'title': 'Ошибка', 'message': 'Некорректное имя!'}, 'error')
         return False
     return True
 
 
 def check_update(password: str, email: str, name: str) -> bool:
     """
-    Функция для полной проверки при обновлении данных. Всплывает сообщение о соответствующей ошибке.
+    Функция для полной проверки при обновлении данных.
+    Всплывает сообщение о соответствующей ошибке.
     :param password: str (пароль пользователя)
     :param email: str (почта пользователя)
     :param name: str (имя пользователя)
@@ -111,14 +116,15 @@ def check_update(password: str, email: str, name: str) -> bool:
     """
     if check_length_password(password):
         flash(
-            {"title": "Ошибка", "message": "Неверная длина пароля, 7-33 символов!"},
-            "error",
+            {'title': 'Ошибка',
+             'message': 'Неверная длина пароля, 7-33 символов!'},
+            'error',
         )
         return False
     elif not check_email(email):
-        flash({"title": "Ошибка", "message": "Некорректная почта!"}, "error")
+        flash({'title': 'Ошибка', 'message': 'Некорректная почта!'}, 'error')
         return False
     elif not check_name(name):
-        flash({"title": "Ошибка", "message": "Некорректное имя!"}, "error")
+        flash({'title': 'Ошибка', 'message': 'Некорректное имя!'}, 'error')
         return False
     return True
