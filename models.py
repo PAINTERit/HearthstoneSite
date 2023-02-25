@@ -27,7 +27,7 @@ class BaseModel:
         db.session.commit()
 
     @classmethod
-    def create(cls, *args, **kwargs) -> "BaseModel":
+    def create(cls, *args, **kwargs) -> 'BaseModel':
         """
         Метод для создания пользователя в БД.
         :param args: tuple (данные пользователя)
@@ -45,9 +45,9 @@ class BaseModel:
         :return: None
         """
         new_user = cls.query.filter_by(login=current_user.login).first()
-        new_user.password = request.form.get("password")
-        new_user.name = request.form.get("name")
-        new_user.email = request.form.get("email")
+        new_user.password = request.form.get('password')
+        new_user.name = request.form.get('name')
+        new_user.email = request.form.get('email')
         new_user.save()
 
     @classmethod
