@@ -16,44 +16,44 @@ from file_checker import allowed_file
 from models import Deck, User, app
 
 
-@app.route("/")
+@app.route('/')
 def home() -> str:
     """
     Главная страница сайта.
     :return: str (главная страница сайта)
     """
-    return render_template("home_page.html")
+    return render_template('home_page.html')
 
 
-@app.route("/about")
+@app.route('/about')
 def about_site() -> str:
     """
     Страница с информацией о сайте.
     :return: str (страница с информацией о сайте)
     """
-    return render_template("about_site_page.html")
+    return render_template('about_site_page.html')
 
 
-@app.route("/contacts")
+@app.route('/contacts')
 def contact() -> str:
     """
     Страница с контактами.
     :return: str (страница с контактами)
     """
-    return render_template("contact_page.html")
+    return render_template('contact_page.html')
 
 
-@app.route("/decks")
+@app.route('/decks')
 def decks() -> str:
     """
     Страница с колодами пользователей.
     :return: str (страница с колодами)
     """
     decks = Deck.query.all()
-    return render_template("decks_page.html", decks=decks)
+    return render_template('decks_page.html', decks=decks)
 
 
-@app.route("/decks/share_decks", methods=["GET", "POST"])
+@app.route('/decks/share_decks', methods=['GET', 'POST'])
 @login_required
 def share_decks() -> Response | str:
     """
@@ -63,31 +63,31 @@ def share_decks() -> Response | str:
     :return: Response | str (в случае успеха перекидывает на функцию decks,
     а в случае неудачи операция повторяется)
     """
-    if request.method == "GET":
-        return render_template("share_decks_page.html")
-    file = request.files["deck_screenshot"]
+    if request.method == 'GET':
+        return render_template('share_decks_page.html')
+    file = request.files['deck_screenshot']
     if allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         Deck.create(
             deck_screenshot=filename,
             deck_user=current_user.login,
             **dict(request.form)
         )
-        flash({"title": "Успех",
-               "message": "Колода успешно добавлена!"}, "success")
-        return redirect(url_for("decks"))
+        flash({'title': 'Успех',
+               'message': 'Колода успешно добавлена!'}, 'success')
+        return redirect(url_for('decks'))
     if not allowed_file(file.filename):
-        flash({"title": "Неудача",
-               "message": "Неправильное расширение!"}, "error")
-        return redirect(url_for("share_decks"))
-    if file.filename == "":
-        flash({"title": "Неудача",
-               "message": "Файл не выбран!"}, "error")
-        return redirect(url_for("share_decks"))
+        flash({'title': 'Неудача',
+               'message': 'Неправильное расширение!'}, 'error')
+        return redirect(url_for('share_decks'))
+    if file.filename == '':
+        flash({'title': 'Неудача',
+               'message': 'Файл не выбран!'}, 'error')
+        return redirect(url_for('share_decks'))
 
 
-@app.route("/account/delete_deck", methods=["GET", "POST"])
+@app.route('/account/delete_deck', methods=['GET', 'POST'])
 @login_required
 def delete_deck() -> Response:
     """
@@ -96,11 +96,11 @@ def delete_deck() -> Response:
     отображающая данные пользователя)
     """
     Deck.delete()
-    flash({"title": "Успех", "message": "Колода удалена!"}, "success")
-    return redirect(url_for("account"))
+    flash({'title': 'Успех', 'message': 'Колода удалена!'}, 'success')
+    return redirect(url_for('account'))
 
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route('/login', methods=['GET', 'POST'])
 def login() -> Response | str:
     """
     Функция авторизации пользователя.
@@ -109,20 +109,20 @@ def login() -> Response | str:
     :return: Response | str (перекидывает на профиль пользователя,
     иначе повторная авторизация)
     """
-    if request.method == "GET":
-        return render_template("login_page.html")
+    if request.method == 'GET':
+        return render_template('login_page.html')
     user = User.query.filter_by(
-        login=request.form.get("login"), password=request.form.get("password")
+        login=request.form.get('login'), password=request.form.get('password')
     ).first()
     if user:
         login_user(user)
-        flash({"title": "Успех", "message": "Вы успешно вошли!"}, "success")
-        return redirect(url_for("account"))
-    flash({"title": "Ошибка", "message": "Пользователь не найден!"}, "error")
-    return redirect(url_for("login"))
+        flash({'title': 'Успех', 'message': 'Вы успешно вошли!'}, 'success')
+        return redirect(url_for('account'))
+    flash({'title': 'Ошибка', 'message': 'Пользователь не найден!'}, 'error')
+    return redirect(url_for('login'))
 
 
-@app.route("/account")
+@app.route('/account')
 @login_required
 def account() -> str:
     """
@@ -132,10 +132,10 @@ def account() -> str:
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=30)
     decks = Deck.query.filter_by(deck_user=current_user.login)
-    return render_template("user_account_page.html", decks=decks)
+    return render_template('user_account_page.html', decks=decks)
 
 
-@app.route("/account/update", methods=["GET", "POST"])
+@app.route('/account/update', methods=['GET', 'POST'])
 @login_required
 def update_data() -> Response | str:
     """
@@ -144,18 +144,18 @@ def update_data() -> Response | str:
     об успехе и перекидывает в профиль пользователя,
     иначе повторная смена данных)
     """
-    if request.method == "GET":
-        return render_template("update_data_page.html")
+    if request.method == 'GET':
+        return render_template('update_data_page.html')
     user = User.query.filter_by(login=current_user.login).first()
     if check_update(**request.form):
         user.update_data()
-        flash({"title": "Успех",
-               "message": "Данные успешно изменены!"}, "success")
-        return redirect(url_for("account"))
-    return redirect(url_for("update_data"))
+        flash({'title': 'Успех',
+               'message': 'Данные успешно изменены!'}, 'success')
+        return redirect(url_for('account'))
+    return redirect(url_for('update_data'))
 
 
-@app.route("/account/logout")
+@app.route('/account/logout')
 @login_required
 def logout() -> Response:
     """
@@ -163,13 +163,13 @@ def logout() -> Response:
     :return: Response (всплывает сообщение о выходе
     и перекидывает на страницу авторизации)
     """
-    flash({"title": "Успех",
-           "message": "Вы вышли из аккаунта!"}, "success")
+    flash({'title': 'Успех',
+           'message': 'Вы вышли из аккаунта!'}, 'success')
     logout_user()
-    return redirect(url_for("login"))
+    return redirect(url_for('login'))
 
 
-@app.route("/registration", methods=["GET", "POST"])
+@app.route('/registration', methods=['GET', 'POST'])
 def registration() -> Response | str:
     """
     Функция для регистрации нового пользователя.
@@ -178,24 +178,24 @@ def registration() -> Response | str:
     и перекидывает в профиль пользователя,
     в случае повторного логина всплывает сообщение об этом и повторная регистрация)
     """
-    if request.method == "GET":
-        return render_template("registration_page.html")
-    if User.query.filter_by(login=request.form.get("login")).first():
+    if request.method == 'GET':
+        return render_template('registration_page.html')
+    if User.query.filter_by(login=request.form.get('login')).first():
         flash(
             {
-                "title": "Ошибка",
-                "message": "Пользователь с таким логином уже зарегистрирован!",
+                'title': 'Ошибка',
+                'message': 'Пользователь с таким логином уже зарегистрирован!',
             },
-            "error",
+            'error',
         )
-        return redirect(url_for("registration"))
+        return redirect(url_for('registration'))
     elif check_registration(**request.form):
         new_user = User.create(**dict(request.form))
         login_user(new_user)
-        flash({"title": "Успех",
-               "message": "Вы успешно зарегистрированы!"}, "success")
-        return redirect(url_for("account"))
-    return redirect(url_for("registration"))
+        flash({'title': 'Успех',
+               'message': 'Вы успешно зарегистрированы!'}, 'success')
+        return redirect(url_for('account'))
+    return redirect(url_for('registration'))
 
 
 @app.after_request
@@ -207,5 +207,5 @@ def redirect_to_login(response: int) -> Response | int:
     :return: Response | int (перекидывает на страницу авторизации)
     """
     if response.status_code == 401:
-        return redirect(url_for("login"))
+        return redirect(url_for('login'))
     return response
