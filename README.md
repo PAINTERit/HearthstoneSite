@@ -12,7 +12,9 @@
 
 ## Локальная установка проекта
 
-<br/>
+#### Перед установкой убедитесь, что у вас установлена версия Python не ниже 3.10.
+
+
 Клонируйте репозиторий и перейдите в папку с проектом:
 
 ```
@@ -20,14 +22,14 @@ git clone https://github.com/PAINTERit/HearthstoneSiteFlask.git
 cd HearthstoneSiteFlask
 ```
 
-<br/>
+
 Установите зависимости:
 
 ```
 pip3 install -r requirements.txt
 ```
 
-<br/>
+
 Запустите сайт:
 
 ```
