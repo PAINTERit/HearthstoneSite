@@ -10,7 +10,7 @@ def allowed_file(filename: str) -> bool:
     :param filename: str (имя файла)
     :return: bool
     """
-    ext = filename.rsplit(".", 1)[1]
+    ext = filename.rsplit('.', 1)[1]
     if ext in ALLOWED_EXTENSIONS:
         return True
     return False
