@@ -148,7 +148,7 @@ def update_data() -> Response | str:
         return render_template('update_data_page.html')
     user = User.query.filter_by(login=current_user.login).first()
     if check_update(**request.form):
-        user.update_data()
+        user.update()
         flash({'title': 'Успех',
                'message': 'Данные успешно изменены!'}, 'success')
         return redirect(url_for('account'))
