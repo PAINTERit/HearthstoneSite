@@ -27,3 +27,4 @@ toolbar = DebugToolbarExtension(app)
 db = SQLAlchemy(app)
 manager = LoginManager(app)
 toastr = Toastr(app)
+
