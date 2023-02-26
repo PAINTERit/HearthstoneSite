@@ -7,6 +7,7 @@ from app import ALLOWED_EXTENSIONS
 def allowed_file(filename: str) -> bool:
     """
     Функция для проверки расширения файла.
+
     :param filename: str (имя файла)
     :return: bool
     """
