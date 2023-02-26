@@ -96,7 +96,8 @@ def delete_deck() -> Response:
     отображающая данные пользователя)
     """
     Deck.delete()
-    flash({'title': 'Успех', 'message': 'Колода удалена!'}, 'success')
+    flash({'title': 'Успех',
+           'message': 'Колода удалена!'}, 'success')
     return redirect(url_for('account'))
 
 
@@ -111,14 +112,14 @@ def login() -> Response | str:
     """
     if request.method == 'GET':
         return render_template('login_page.html')
-    user = User.query.filter_by(
-        login=request.form.get('login'), password=request.form.get('password')
-    ).first()
+    user = User.query.filter_by(**request.form).first()
     if user:
         login_user(user)
-        flash({'title': 'Успех', 'message': 'Вы успешно вошли!'}, 'success')
+        flash({'title': 'Успех',
+               'message': 'Вы успешно вошли!'}, 'success')
         return redirect(url_for('account'))
-    flash({'title': 'Ошибка', 'message': 'Пользователь не найден!'}, 'error')
+    flash({'title': 'Ошибка',
+           'message': 'Пользователь не найден!'}, 'error')
     return redirect(url_for('login'))
 
 
@@ -182,12 +183,8 @@ def registration() -> Response | str:
         return render_template('registration_page.html')
     if User.query.filter_by(login=request.form.get('login')).first():
         flash(
-            {
-                'title': 'Ошибка',
-                'message': 'Пользователь с таким логином уже зарегистрирован!',
-            },
-            'error',
-        )
+            {'title': 'Ошибка',
+             'message': 'Пользователь с таким логином уже зарегистрирован!'}, 'error')
         return redirect(url_for('registration'))
     elif check_registration(**request.form):
         new_user = User.create(**dict(request.form))
