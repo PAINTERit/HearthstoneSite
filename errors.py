@@ -10,6 +10,7 @@ from app import app, ERROR_FOLDER
 def error404(status: int) -> str:
     """
     Функция обрабатывает ошибку HTTP 404.
+
     :param status: int(Код ошибки)
     :return: error404.html (Шаблон страницы ошибки)
     """
@@ -20,6 +21,7 @@ def error404(status: int) -> str:
 def error403(status: int) -> str:
     """
     Функция обрабатывает ошибку HTTP 403.
+
     :param status: int(Код ошибки)
     :return: error403.html (Шаблон страницы ошибки)
     """
@@ -30,6 +32,7 @@ def error403(status: int) -> str:
 def error500(status: int) -> str:
     """
     Функция обрабатывает ошибку HTTP 500.
+
     :param status: int(Код ошибки)
     :return: error500.html (Шаблон страницы ошибки)
     """
