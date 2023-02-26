@@ -21,6 +21,7 @@ class BaseModel:
     def save(self) -> None:
         """
         Метод для сохранения данных в БД.
+
         :return: None
         """
         db.session.add(self)
@@ -30,6 +31,7 @@ class BaseModel:
     def create(cls, *args, **kwargs) -> 'BaseModel':
         """
         Метод для создания пользователя в БД.
+
         :param args: tuple (данные пользователя)
         :param kwargs: dict (данные пользователя)
         :return: BaseModel
@@ -42,6 +44,7 @@ class BaseModel:
     def update(cls) -> None:
         """
         Метод для обновления данных пользователя в БД.
+
         :return: None
         """
         new_user = cls.query.filter_by(login=current_user.login).first()
@@ -54,6 +57,7 @@ class BaseModel:
     def delete(cls) -> None:
         """
         Метод для удаления колоды из БД.
+
         :return: None
         """
         deck = cls.query.filter_by(id=Deck.id).first()
@@ -89,6 +93,7 @@ class Deck(db.Model, BaseModel):
 def load_user(user_id: int) -> User:
     """
     Вспомогательная функция для flask login.
+
     :param user_id: int (id пользователя)
     :return: Users (класс пользователя)
     """
