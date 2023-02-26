@@ -22,14 +22,21 @@ git clone https://github.com/PAINTERit/HearthstoneSiteFlask.git
 cd HearthstoneSiteFlask
 ```
 
-
+<br/>
 Установите зависимости:
 
 ```
 pip3 install -r requirements.txt
 ```
 
+<br/>
+После клонирования и установки библиотек рекомендуется выключить режим debug:
 
+```
+app.debug = True -> app.debug = False
+```
+
+<br/>
 Запустите сайт:
 
 ```
